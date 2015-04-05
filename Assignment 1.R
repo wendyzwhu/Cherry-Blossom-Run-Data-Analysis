@@ -12,12 +12,12 @@ head(f)
 #1999
 ff <- ff[-(1:6)]
 ff <- read.fwf("women10Mile_1999", widths = c( 5,9,21,2,18,7,5))
-f[7:13]
-f[8]
-nchar(f[8])
-nchar(strsplit(f[8], " "))
-lapply(strsplit(f[8], " "), nchar)
-strsplit(f[8]," ")
+ff[7:13]
+ff[7]
+nchar(ff[7])
+nchar(strsplit(ff[8], " "))
+lapply(strsplit(ff[8], " "), nchar)
+strsplit(ff[8]," ")
 
 ##(2) multiple files
 ##Step two: EDA##
@@ -38,4 +38,3 @@ splitHeader = function (txt) {
   list( header = txt[start:(br-1)],
         body = txt[-(1:br)])
 }
-
