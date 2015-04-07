@@ -1,6 +1,7 @@
 ##Step one: reading data into R##
 ##Get the brief idea of the data
-setwd("d:\\00 Davis\\03 2015 Spring Quarter\\Stat 242\\Assignment 1\\stat242_2015\\Assignment1\\data")
+setwd("d:\\00 Davis\\03 2015 Spring Quarter\\Stat 242\\Assignment 1\\stat242_2015\\Assignment1")
+setwd("d:\\00 Davis\\03 2015 Spring Quarter\\Stat 242\\Data_Duncan\\stat242_2015\\Assignment1\\data")
 list.dirs() #check the current directory
 dir()
 list.files()
@@ -45,3 +46,43 @@ splitHeader = function (txt) {
   list( header = txt[start:(br-1)],
         body = txt[-(1:br)])
 }
+
+##Test read all files by using readLines
+lapply(list.files(), readCherryBlossom)
+##debug function
+debug = function(filename, txt = readLines(filename)){
+  isBlank = txt ==""
+  br = which(isBlank)[2]
+}
+paths <- list.files(, 
+                    recursive = TRUE)
+
+lapply(paths, readCherryBlossom)
+readCherryBlossom("women10Mile_2000")
+
+##readalldata into a big list
+wholeList = lapply(list.files(), readLines)
+
+##Deal with the unusual files men 2006 2008 women 2004 2008
+men2006 = readLines(men10Mile_2006)
+women2004 = readLines(women10Mile_2004)
+men2008 = readLines(men10Mile_2008)
+women2008 = readLines(women10Mile_2008)
+##Though there is a waringing but it is fine. 
+
+##Assign names to the big list ???
+names(wholeList)[1] <- list.files()[1]
+nameswholeList = function (filenames, wholeList = wholeList) 
+{ 
+  location = function (filenames) 
+{ location = which (list.files() == filenames)
+  location}
+  names(wholeList)[location] <- list.files()[location] }
+locate = function (filenames) 
+{ location = which (list.files() == filenames)
+  location}
+lapply(list.files(), nameswholeList)
+
+
+##Remove the title
+
