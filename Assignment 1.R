@@ -61,7 +61,7 @@ lapply(paths, readCherryBlossom)
 readCherryBlossom("women10Mile_2000")
 
 ##readalldata into a big list
-wholeList = lapply(list.files(), readLines)
+wholeList = lapply(list.files(), function(x)(readLines(x,encoding = "UTF-8")))
 
 ##Deal with the unusual files men 2006 2008 women 2004 2008
 men2006 = readLines(men10Mile_2006)
@@ -94,6 +94,7 @@ blanksDetect <- lapply(c(1:24), blanks)
 ##detect "=" in the files##slow
 titleDetect = function (x)
 {
+  library(stringr)
   wholeList = lapply(list.files(), readLines)
   wholeList[[15]] <- str_replace(wholeList[[15]], wholeList[[15]][18], wholeList[[3]][17])
   wholeList[[15]] <- str_replace(wholeList[[15]], wholeList[[15]][17], wholeList[[3]][16])
