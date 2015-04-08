@@ -90,3 +90,20 @@ blanks = function (x, wholeList = lapply(list.files(), readLines)) ##could it be
 {which(wholeList[[x]] == "")}
 
 blanksDetect <- lapply(c(1:24), blanks)
+
+##detect "=" in the files
+titleDetect = function (x, wholeList = lapply(list.files(), readLines))
+{grep("^=", wholeList[[x]])}
+titleDect <- lapply(c(1:24), titleDetect)
+
+##delect the title function
+deleteTitle = function (x) 
+{wholeList[[x]][-(1:(titleDect[[x]]-2))]}
+wholeListNew <- lapply(c(1:14), deleteTitle)
+wholeListNew1 <- lapply(c(16:24), deleteTitle)
+###speacial case for women 2001 add the header??
+wholeList[[15]] <- str_replace(wholeList[[15]], wholeList[[15]][18], wholeList[[3]][17])
+wholeList[[15]] <- str_replace(wholeList[[15]], wholeList[[15]][17], wholeList[[3]][16])
+head(deleteTitle(15))
+
+wholeList[[15]]<- wholeList[[15]][-(1:grep("^=", wholeList[[15]])-2)]
