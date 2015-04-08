@@ -110,8 +110,8 @@ deleteEdge = function(x)
 {wholeListNew[[x]][-2]}
 wholeListNew1 <- lapply(c(1:24), deleteEdge)
 
-###speacial case for women 2001 add the header??
-women2001 <- str_replace(wholeList[[15]], wholeList[[15]][18], wholeList[[3]][17])
+###speacial case for women 2001 add the header???how to sovle 
+wholeList[[15]] <- str_replace(wholeList[[15]], wholeList[[15]][18], wholeList[[3]][17])
 wholeList[[15]] <- str_replace(wholeList[[15]], wholeList[[15]][17], wholeList[[3]][16])
 head(deleteTitle(15))
 head(women2001)
@@ -121,5 +121,5 @@ wholeList[[15]]<- wholeList[[15]][-(1:grep("^=", wholeList[[15]])-2)]
 checkFir = function (x) 
 {wholeListNew1[[x]][1]}
 fir = lapply(c(1:24), checkFir)
-
+formCheck
 
