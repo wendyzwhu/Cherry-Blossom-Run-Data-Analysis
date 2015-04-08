@@ -91,19 +91,34 @@ blanks = function (x, wholeList = lapply(list.files(), readLines)) ##could it be
 
 blanksDetect <- lapply(c(1:24), blanks)
 
-##detect "=" in the files
-titleDetect = function (x, wholeList = lapply(list.files(), readLines))
-{grep("^=", wholeList[[x]])}
+##detect "=" in the files##slow
+titleDetect = function (x)
+{
+  wholeList = lapply(list.files(), readLines)
+  wholeList[[15]] <- str_replace(wholeList[[15]], wholeList[[15]][18], wholeList[[3]][17])
+  wholeList[[15]] <- str_replace(wholeList[[15]], wholeList[[15]][17], wholeList[[3]][16])
+  grep("^=", wholeList[[x]])}
 titleDect <- lapply(c(1:24), titleDetect)
 
 ##delect the title function
 deleteTitle = function (x) 
 {wholeList[[x]][-(1:(titleDect[[x]]-2))]}
-wholeListNew <- lapply(c(1:14), deleteTitle)
-wholeListNew1 <- lapply(c(16:24), deleteTitle)
+wholeListNew <- lapply(c(1:24), deleteTitle)
+##delete the "=="
+deleteEdge = function(x)
+{wholeListNew[[x]][-2]}
+wholeListNew1 <- lapply(c(1:24), deleteEdge)
+
 ###speacial case for women 2001 add the header??
-wholeList[[15]] <- str_replace(wholeList[[15]], wholeList[[15]][18], wholeList[[3]][17])
+women2001 <- str_replace(wholeList[[15]], wholeList[[15]][18], wholeList[[3]][17])
 wholeList[[15]] <- str_replace(wholeList[[15]], wholeList[[15]][17], wholeList[[3]][16])
 head(deleteTitle(15))
-
+head(women2001)
 wholeList[[15]]<- wholeList[[15]][-(1:grep("^=", wholeList[[15]])-2)]
+
+##Check the title to see if there are in the same form
+checkFir = function (x) 
+{wholeListNew1[[x]][1]}
+fir = lapply(c(1:24), checkFir)
+
+
