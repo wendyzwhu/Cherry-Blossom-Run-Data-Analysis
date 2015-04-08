@@ -85,4 +85,8 @@ lapply(list.files(), nameswholeList)
 
 
 ##Remove the title
+##detect the blanks in the files
+blanks = function (x, wholeList = lapply(list.files(), readLines)) ##could it be more efficient?
+{which(wholeList[[x]] == "")}
 
+blanksDetect <- lapply(c(1:24), blanks)
