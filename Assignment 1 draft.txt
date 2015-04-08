@@ -61,3 +61,73 @@ lapply(paths, readCherryBlossom)
 readCherryBlossom("women10Mile_2000")
 
 ##readalldata into a big list
+wholeList = lapply(list.files(), readLines)
+###Check the elements of the list
+head(wholeList[[1])##It is the top of the table which can be removed 
+
+##Deal with the unusual files men 2006 2008 women 2004 2008
+men2006 = readLines(men10Mile_2006)
+women2004 = readLines(women10Mile_2004)
+men2008 = readLines(men10Mile_2008)
+women2008 = readLines(women10Mile_2008)
+which(list.files() == "women10Mile_2008")
+tail(wholeList[[22]])
+
+##Delete the Title
+#1 Step one single file
+## 1999 men 
+which(wholeList[[1]] == "")
+#2 Write function to identify the blanks
+blanks = function (x, wholeList = wholeList) 
+{which(wholeList[[x]] == ""}
+#3 I found that by using blanks one cannot detect title very well so I choose "=" to detect
+##detect "=" in the files
+titleDetect = function (x)
+{
+  wholeList = lapply(list.files(), readLines)
+  wholeList[[15]] <- str_replace(wholeList[[15]], wholeList[[15]][18], wholeList[[3]][17])
+  wholeList[[15]] <- str_replace(wholeList[[15]], wholeList[[15]][17], wholeList[[3]][16])
+  grep("^=", wholeList[[x]])}
+titleDect <- lapply(c(1:24), titleDetect)
+#4 delete the title function 
+##try on one file
+wholeList[[3]][1:(titleDect[[3]]-2)] #Because we want to delete the title
+test <- wholeList[[3]][-(1:(titleDect[[3]]-2))]
+##write function(except women 2001) 
+deleteTitle = function (x) 
+{wholeList[[x]][-(1:(titleDect[[x]]-2))]}
+###special case "women10Mile_2001" to insert a title
+wholeList[[15]] <- str_replace(wholeList[[15]], wholeList[[15]][18], wholeList[[3]][17])
+wholeList[[15]] <- str_replace(wholeList[[15]], wholeList[[15]][17], wholeList[[3]][16])
+
+##delete the "=="
+deleteEdge = function(x)
+{wholeListNew[[x]][-2]}
+wholeListNew1 <- lapply(c(1:24), deleteTitle)
+
+##Check the title to see if there are in the same form
+checkfir = function (x) 
+{wholeListNew[[x]][1]}
+
+##Check the special list 
+##function to check the title is the same or not
+formCheck = function (x)
+{
+
+###1. men 2009 readLines encoding = "UTF-8"
+###2. 
+###3. 
+###4. 
+###5. 
+
+
+##Assign names to the whole list
+#1 Step one try on one file
+names(wholeList)[1] <- list.files()[1]
+#2 Step two assign names function ##?Probelm 
+nameswholeList = function (filename, wholeList = wholeList) 
+{ names(wholeList)[location] <- list.files()[location] }
+locate = function (filenames) 
+{ location = which (list.files() == filenames)}
+lapply(list.files(), nameswholeList)
+
