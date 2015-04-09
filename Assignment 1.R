@@ -121,5 +121,12 @@ wholeList[[15]]<- wholeList[[15]][-(1:grep("^=", wholeList[[15]])-2)]
 checkFir = function (x) 
 {wholeListNew1[[x]][1]}
 fir = lapply(c(1:24), checkFir)
-formCheck
 
+
+##Turn header to the Upper?? problem
+upper = function (x) 
+{toupper(wholeListNew1[[x]][1])}
+wholeListU = lapply(c(1:24), upper)
+firU = sapply(c(1:24), function(x) (wholeListU)[[x]][1])
+
+##
