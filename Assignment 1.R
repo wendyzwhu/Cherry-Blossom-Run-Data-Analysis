@@ -129,4 +129,14 @@ upper = function (x)
 wholeListU = lapply(c(1:24), upper)
 firU = sapply(c(1:24), function(x) (wholeListU)[[x]][1])
 
-##
+upperTitle = function (x) 
+{library(stringr)
+ wholeListNew1[[x]] <- 
+   str_replace(wholeListNew1[[x]], wholeListNew1[[x]][1], firU[x])}
+listCap <- lapply(c(1:24), upperTitle) #organized form 
+checkTiltle <- lapply(c(1:24), function(x){listCap[[x]][1]})
+
+##split the data
+###try on a file
+m99 <- as.data.frame(listCap[[1]])
+m99¡¡<- 
