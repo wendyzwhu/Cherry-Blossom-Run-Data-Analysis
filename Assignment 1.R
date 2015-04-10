@@ -140,3 +140,13 @@ checkTiltle <- lapply(c(1:24), function(x){listCap[[x]][1]})
 ###try on a file
 m99 <- as.data.frame(listCap[[1]])
 m99¡¡<- 
+
+
+##slit according to ==
+lapply(strsplit(wholeListNew[[1]][2], " "), count )
+count = function (x) {
+  #Add 1 to each width#
+  #there is a blank after each cloumn#
+  nchar(x) +1
+}
+test <- lapply(strsplit[[1]], )
