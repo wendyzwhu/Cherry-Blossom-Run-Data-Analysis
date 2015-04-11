@@ -149,4 +149,23 @@ count = function (x) {
   #there is a blank after each cloumn#
   nchar(x) +1
 }
-test <- lapply(strsplit[[1]], )
+
+##try read.fwf
+###general cases
+count = function (x) {
+  #Add 1 to each width#
+  #there is a blank after each cloumn#
+  nchar(x) +1
+}
+##detect "=" in the files##slow
+titleDetect = function (x)
+{
+  library(stringr)
+  wholeList = lapply(list.files(), readLines)
+  wholeList[[15]] <- str_replace(wholeList[[15]], wholeList[[15]][18], wholeList[[3]][17])
+  wholeList[[15]] <- str_replace(wholeList[[15]], wholeList[[15]][17], wholeList[[3]][16])
+  grep("^=", wholeList[[x]])}
+titleDect <- lapply(c(1:24), titleDetect) ##a list of number where = exists 
+#skip 
+skip = function (x) {titleDect[[x]]-2}
+skipN = lapply(c(1:24), skip)
