@@ -139,10 +139,10 @@ checkTiltle <- lapply(c(1:24), function(x){listCap[[x]][1]})
 ##split the data
 ###try on a file
 m99 <- as.data.frame(listCap[[1]])
-m99¡¡<- 
 
 
-##slit according to ==
+
+##split according to ==
 lapply(strsplit(wholeListNew[[1]][2], " "), count )
 count = function (x) {
   #Add 1 to each width#
@@ -166,6 +166,18 @@ titleDetect = function (x)
   wholeList[[15]] <- str_replace(wholeList[[15]], wholeList[[15]][17], wholeList[[3]][16])
   grep("^=", wholeList[[x]])}
 titleDect <- lapply(c(1:24), titleDetect) ##a list of number where = exists 
+
 #skip 
-skip = function (x) {titleDect[[x]]-2}
+skipLine = function (x) {titleDect[[x]]-2}
 skipN = lapply(c(1:24), skip)
+
+#width in the big data frame
+widthC = function(x) {lapply(strsplit(wholeList[[x]][titleDect[[x]]]," "), count)}
+
+#read data amazing function 
+cherryBlossom <- function (x) { read.fwf(filenames(x), widthC(x), skip = skipLine(x), comment.char = '', encoding = "UTF-8")}
+
+##exception??Na??
+cherryBlossomT <- function (x) { read.fwf(filenames(x), widthC(x), skip = skipLine(x), fill = TRUE, na.strings = "NA", comment.char = '', encoding = "UTF-8")}
+##names ??
+nameVar = function(x) {names(x)<-as.character(unlist(x[1,]))}
