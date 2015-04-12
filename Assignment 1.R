@@ -167,8 +167,11 @@ titleDetect = function (x)
   grep("^=", wholeList[[x]])}
 titleDect <- lapply(c(1:24), titleDetect) ##a list of number where = exists 
 
+##names 
+filenames = function(x) {list.files()[x]}
+
 #skip 
-skipLine = function (x) {titleDect[[x]]-2}
+skipLine = function (x) {titleDect[[x]]}
 skipN = lapply(c(1:24), skip)
 
 #width in the big data frame
@@ -177,7 +180,14 @@ widthC = function(x) {lapply(strsplit(wholeList[[x]][titleDect[[x]]]," "), count
 #read data amazing function 
 cherryBlossom <- function (x) { read.fwf(filenames(x), widthC(x), skip = skipLine(x), comment.char = '', encoding = "UTF-8")}
 
-##exception??Na??
-cherryBlossomT <- function (x) { read.fwf(filenames(x), widthC(x), skip = skipLine(x), fill = TRUE, na.strings = "NA", comment.char = '', encoding = "UTF-8")}
-##names ??
-nameVar = function(x) {names(x)<-as.character(unlist(x[1,]))}
+##exception??Na??blank
+cherryBlossomT <- function (x) { read.fwf(filenames(x), widthC(x), skip = skipLine(x), col.names = cherryCol(x), check.names=FALSE, fill = TRUE,  na.strings = c("","NA"), comment.char = '', blank.lines.skip = TRUE, encoding = "UTF-8")}
+
+##names ??some exception 
+nameVar = function(x) { tolower(as.character(unlist(x[1,])))}
+##Extract the title??problem 
+cherryNames <- function (x) { read.fwf(filenames(x), widthC(x), skip = skipLine(x)-2, fill = TRUE,  na.strings = c("","NA"), comment.char = '', stringsAsFactors=FALSE, blank.lines.skip = TRUE,encoding = "UTF-8")}
+cherryCol <- function (x) {tolower(cherryNames(x)[1,])}
+
+##Encoding 
+m09 <- readLines("men10Mile_2009", encoding = "UTF-8")
