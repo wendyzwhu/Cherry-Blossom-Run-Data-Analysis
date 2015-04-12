@@ -189,5 +189,23 @@ nameVar = function(x) { tolower(as.character(unlist(x[1,])))}
 cherryNames <- function (x) { read.fwf(filenames(x), widthC(x), skip = skipLine(x)-2, fill = TRUE,  na.strings = c("","NA"), comment.char = '', stringsAsFactors=FALSE, blank.lines.skip = TRUE,encoding = "UTF-8")}
 cherryCol <- function (x) {tolower(cherryNames(x)[1,])}
 
-##Encoding 
-m09 <- readLines("men10Mile_2009", encoding = "UTF-8")
+##Encoding solved
+encoding09 <- readLines("men10Mile_2009", encoding = "UTF-8")
+encoding09 <- gsub("[\u00A0]"," ", encoding09 )
+widthEncoding <- lapply(strsplit(encoding09[grep("^=", encoding09)]," "),count)
+m09 <- read.fwf(textConnection(encoding09),widthC(11), skip = skipLine(11),  col.names = gsub("[\u00A0]"," ", cherryCol(11)), check.names=FALSE, fill = TRUE,  na.strings = c("","NA"), comment.char = '', blank.lines.skip = TRUE, encoding = "UTF-8")
+
+
+##name the women solved
+w01 <- cherryBlossomT(15)
+colnames(w01) <- cherryCol(3)
+
+##uniform the title 
+uniTitle <- sapply(c(1:24), cherryCol)
+
+##put into a big dataframe list
+cherryRun <- lapply(c(1:24),cherryBlossomT)
+cherryRun[[15]]<-w01
+cherryRun[[11]]<-m09
+
+
