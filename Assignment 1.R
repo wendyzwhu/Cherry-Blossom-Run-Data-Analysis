@@ -207,5 +207,6 @@ uniTitle <- sapply(c(1:24), cherryCol)
 cherryRun <- lapply(c(1:24),cherryBlossomT)
 cherryRun[[15]]<-w01
 cherryRun[[11]]<-m09
-
-
+cherryRun[[8]] <- cherryRun[[8]][-(5236:5237),] ##incomplet lines
+cherryRun[[10]] <- cherryRun[[10]][-(5906:5907),] ##incomplet lines
+cherryRun[[22]] <- cherryRun[[22]][-6398,] ##incomplet lines
