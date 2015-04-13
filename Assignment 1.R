@@ -302,4 +302,14 @@ names(allAge) <- NULL
 hist(allAge, main = "Distribution of Age (1999-2010)", xlab = "Age", col = heat.colors(5))
 
 ##gender
-runner <- function (x)
+runner <- function (x) {nrow(cherryRun[[x]])}
+runnerTotal = runnerM + runnerF
+runnerM = unlist(lapply(c(1:12), runner))
+runnerF = unlist(lapply(c(13:24), runner))
+plot(runnerM,type = "o", axes = FALSE, pch = 22, lty = 2, ylim = c(2000,16000), ylab = 'Runner', xlab = "Year")
+lines(runnerF,type = "o", pch =22, col = 'red')
+lines(runnerTotal, type = "o", pch = 22, lty = 1, col = "blue")
+title(main = "Runner Number", font.main = 4)
+axis(1, at = 1:12, lab = as.character(c(1999:2010)))
+axis(2,  las = 1, at = c(2000,4000,6000,8000,10000,12000,14000,16000))
+legend("topleft", xjust = 0,c("Men","Women","Total") , cex=0.8,col=c("black","red","blue"), pch = 21:22, lty = 1:2, bty = "n")
