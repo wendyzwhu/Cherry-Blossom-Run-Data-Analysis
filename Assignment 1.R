@@ -193,7 +193,7 @@ cherryCol <- function (x) {tolower(cherryNames(x)[1,])}
 encoding09 <- readLines("men10Mile_2009", encoding = "UTF-8")
 encoding09 <- gsub("[\u00A0]"," ", encoding09 )
 widthEncoding <- lapply(strsplit(encoding09[grep("^=", encoding09)]," "),count)
-m09 <- read.fwf(textConnection(encoding09),widthC(11), skip = skipLine(11),  col.names = gsub("[\u00A0]"," ", cherryCol(11)), check.names=FALSE, fill = TRUE,  na.strings = c("","NA"), comment.char = '', blank.lines.skip = TRUE, encoding = "UTF-8")
+m09 <- read.fwf(textConnection(encoding09),c( 6,12,7,23,3,21,8,7,2,6), skip = skipLine(11),  col.names =  c("place","div/tot","num","name","ag","hometown","gun time","time","id","pace"), check.names=FALSE, fill = TRUE,  na.strings = c("","NA"), comment.char = '', blank.lines.skip = TRUE, encoding = "UTF-8")
 
 
 ##name the women solved
@@ -210,9 +210,27 @@ cherryRun[[11]]<-m09
 cherryRun[[8]] <- cherryRun[[8]][-(5236:5237),] ##incomplet lines
 cherryRun[[10]] <- cherryRun[[10]][-(5906:5907),] ##incomplet lines
 cherryRun[[22]] <- cherryRun[[22]][-6398,] ##incomplet lines
-cherryRun[[8]] 
-test <- read.fwf(filenames(8), c(6,9,7,23,3,16,8,8,1,6,2), skip = skipLine(8), col.names = cherryCol(8), check.names=FALSE, fill = TRUE,  na.strings = c("","NA"), comment.char = '', blank.lines.skip = TRUE, encoding = "UTF-8")
-cherryRun[[20]]
+
+######EXCEPTIONS "="
+cherryNamesEX <- function (x) { read.fwf(filenames(x), c(6,9,7,23,3,16,8,8,1,6,2), skip = skipLine(x)-2, fill = TRUE,  na.strings = c("","NA"), comment.char = '', stringsAsFactors=FALSE, blank.lines.skip = TRUE,encoding = "UTF-8")}
+cherryColEX <- function (x) {tolower(cherryNamesEX(x)[1,])}
+cherryRun[[8]]  <- read.fwf(filenames(8), c(6,9,7,23,3,16,8,8,1,6,2), skip = skipLine(8), col.names = cherryColEX(8), check.names=FALSE, fill = TRUE,  na.strings = c("","NA"), comment.char = '', blank.lines.skip = TRUE, encoding = "UTF-8")
+cherryRun[[20]] <- read.fwf(filenames(20), c(6,9,7,23,3,16,8,8,1,6,2), skip = skipLine(20), col.names = cherryColEX(20), check.names=FALSE, fill = TRUE,  na.strings = c("","NA"), comment.char = '', blank.lines.skip = TRUE, encoding = "UTF-8")
+
+######EXCEPTIONS TIME
+cherryRun[[9]] <- read.fwf(filenames(9), c( 6,12,7,23,3,19,7,1,1,6,2,8), skip = skipLine(9), col.names = c("place","div/tot","num","name","ag","hometown","time","id","na","pace","s","split"), check.names=FALSE, fill = TRUE,  na.strings = c("","NA"), comment.char = '', blank.lines.skip = TRUE, encoding = "UTF-8")
+
+cherryRun[[21]] <- read.fwf(filenames(21), c( 6,12,7,23,3,19,7,1,1,6,2,8), skip = skipLine(21), col.names = c("place","div/tot","num","name","ag","hometown","time","id","na","pace","s","split"), check.names=FALSE, fill = TRUE,  na.strings = c("","NA"), comment.char = '', blank.lines.skip = TRUE, encoding = "UTF-8")
+
+cherryRun[[23]] <- read.fwf(filenames(23), c( 6,12,7,23,3,21,8,7,2,6), skip = skipLine(23), col.names = c("place","div/tot","num","name","ag","hometown","gun time","time","id","pace"), check.names=FALSE, fill = TRUE,  na.strings = c("","NA"), comment.char = '', blank.lines.skip = TRUE, encoding = "UTF-8")
+
+
+cherryRun[[12]]<-  read.fwf(filenames(12),widthC(12), skip = skipLine(12), col.names =  c("place","div/tot","num","name","ag","hometown","5 mile","time","net time","na","pace"), check.names=FALSE, fill = TRUE,  na.strings = c("","NA"), comment.char = '', blank.lines.skip = TRUE, encoding = "UTF-8")
+
+
+cherryRun[[24]]<-  read.fwf(filenames(24), c( 6,12,7,23,3,21,8,8,7,1,1,6,2), skip = skipLine(24), col.names = c("place","div/tot","num","name","ag","hometown","5 mile","gun time","time","id","na","pace","s"), check.names=FALSE, fill = TRUE,  na.strings = c("","NA"), comment.char = '', blank.lines.skip = TRUE, encoding = "UTF-8")
+
+
 ##clean up the big data list 
 cherryRunFinal <- lapply(c(1:24),cherryBlossomT)
 cherryRunFinal[[15]]<-w01
@@ -226,10 +244,26 @@ cherryRunFinal[[13]] <- cherryRunFinal[[13]][,-c(2,7)]
 ##Rank one problem 
 placeOne <- function(x){cherryRun[[x]][1,]}
 rankOne <- lapply(c(1:24), placeOne)
+
 ##Hometown
 Home <- function(x) {select(rankOne[[x]],contains("hometown"))}
-winnerHome <- lapply(c(1:24), Home)
+winnerHome <- as.character(unlist(sapply(c(1:24), Home)))
+Kenya <- sum(str_count(winnerHome, "Kenya\\s*"))/24
+Ken <- sum(str_count(winnerHome,"[K[Ee][Nn]\\s]*"))/24
+Ethiopia<- sum(str_count(winnerHome, winnerHome[1]))/24
+Morocco <- sum(str_count(winnerHome, winnerHome[10]))/24
+Others <- (24 - kenya - ken - ethiopia - morocco)/24
+pie(c(Kenya,Ken,Ethiopia,Morocco,Others),labels = c("Kenya","Ken","Ethiopia","Morocco","Other"), col = brewer.pal(5,"Purples"), main = "Hometown of Winners (1999 - 2010)")
+
+##Age
+Age <- function(x) {select(rankOne[[x]],contains("ag"))}
+winnerAge <- as.numeric(unlist(sapply(c(1:24), Age)))
+names(winnerAge) <- NULL
+hist(winnerAge, main = "Distribution of Winner Age (1999-2010)", xlab = "Winner Age", col = heat.colors(5))
 
 ###time 
-###women 
-library(ggplot2)
+Wtime <- function(x) {select(rankOne[[x]],matches("^time|^net|^ net tim\\s*$"))}
+winnerTime <- sapply(c(1:24), Wtime)
+timeConvert <- sapply(c(1:24), Age)
+winnerTime[[12]] <- select(rankOne[[12]], matches("^time"))
+
