@@ -210,3 +210,26 @@ cherryRun[[11]]<-m09
 cherryRun[[8]] <- cherryRun[[8]][-(5236:5237),] ##incomplet lines
 cherryRun[[10]] <- cherryRun[[10]][-(5906:5907),] ##incomplet lines
 cherryRun[[22]] <- cherryRun[[22]][-6398,] ##incomplet lines
+cherryRun[[8]] 
+test <- read.fwf(filenames(8), c(6,9,7,23,3,16,8,8,1,6,2), skip = skipLine(8), col.names = cherryCol(8), check.names=FALSE, fill = TRUE,  na.strings = c("","NA"), comment.char = '', blank.lines.skip = TRUE, encoding = "UTF-8")
+cherryRun[[20]]
+##clean up the big data list 
+cherryRunFinal <- lapply(c(1:24),cherryBlossomT)
+cherryRunFinal[[15]]<-w01
+cherryRunFinal[[11]]<-m09
+cherryRunFinal[[1]] <- cherryRunFinal[[1]][,-c(2,7)]
+cherryRunFinal[[13]] <- cherryRunFinal[[13]][,-c(2,7)]
+
+
+
+
+##Rank one problem 
+placeOne <- function(x){cherryRun[[x]][1,]}
+rankOne <- lapply(c(1:24), placeOne)
+##Hometown
+Home <- function(x) {select(rankOne[[x]],contains("hometown"))}
+winnerHome <- lapply(c(1:24), Home)
+
+###time 
+###women 
+library(ggplot2)
